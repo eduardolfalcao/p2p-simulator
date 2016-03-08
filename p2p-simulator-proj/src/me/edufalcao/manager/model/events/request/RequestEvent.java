@@ -1,5 +1,4 @@
 package me.edufalcao.manager.model.events.request;
-
 import me.edufalcao.manager.model.events.Event;
 
 public class RequestEvent extends Event {
@@ -18,6 +17,18 @@ public class RequestEvent extends Event {
 	public void run() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public String getPeerId() {
+		return peerId;
+	}
+	
+	public String getRequestId() {
+		return requestId;
+	}
+	
+	public int getRuntime() {
+		return runtime;
 	}
 
 }

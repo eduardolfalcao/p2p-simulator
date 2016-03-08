@@ -8,7 +8,6 @@ import java.util.List;
 
 import me.edufalcao.manager.model.events.Event;
 import me.edufalcao.manager.model.events.request.RequestEvent;
-import me.edufalcao.manager.plugins.scheduler.workloadbased.exceptions.JobOutOfIntervalException;
 
 public class LogReader {
 
@@ -23,20 +22,24 @@ public class LogReader {
 			// skip first line
 			String line = bufReader.readLine();
 			// read the rest of lines
-			while ((line = bufReader.readLine()) != null)
-				events.add(readTask(line, initialTime, endTime));
+			while ((line = bufReader.readLine()) != null){
+				Event event = readTask(line, initialTime, endTime);
+				if(event.getInitialTime() < initialTime)
+					continue;
+				else if(event.getInitialTime() >= initialTime
+						&& event.getInitialTime() <= endTime)
+				events.add(event);
+				else
+					break;			
+			}
 			bufReader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (JobOutOfIntervalException e) {
-			e.printStackTrace();
-			return events;
-		}
+		} 
 		return events;
 	}
 
-	private static Event readTask(String line, int initialTime, int endTime)
-			throws JobOutOfIntervalException {
+	protected static Event readTask(String line, int initialTime, int endTime){
 		// peerId jobId submitTime runTime
 		// P4 U33-J1-T0 3 15
 
@@ -45,16 +48,9 @@ public class LogReader {
 		String jobId = values[1];
 		String submitTime = values[2];
 		String runtime = values[3];
-
-		if (Integer.parseInt(submitTime) >= initialTime
-				&& Integer.parseInt(submitTime) <= endTime) {
-			return new RequestEvent(peerId, Integer.parseInt(submitTime),
-					Integer.parseInt(runtime), jobId);
-		} else {
-			throw new JobOutOfIntervalException("Job submit time is "
-					+ submitTime + ". " + "It should be inside the interval ["
-					+ initialTime + "," + endTime + "]");
-		}
+		
+		return new RequestEvent(peerId, Integer.parseInt(submitTime),
+				Integer.parseInt(runtime), jobId);
 	}
 
 }

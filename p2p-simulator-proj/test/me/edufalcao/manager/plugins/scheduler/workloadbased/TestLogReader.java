@@ -6,6 +6,7 @@ import java.util.List;
 
 import me.edufalcao.manager.model.events.Event;
 import me.edufalcao.manager.model.events.request.RequestEvent;
+import me.edufalcao.manager.plugins.scheduler.workloadbased.LogReader;
 
 import org.junit.Test;
 
