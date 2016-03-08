@@ -1,5 +1,7 @@
 package me.edufalcao.manager.model;
 
+import java.util.List;
+
 import me.edufalcao.manager.plugins.capacityController.CapacityControllerPlugin;
 import me.edufalcao.manager.plugins.prioritization.PrioritizationPlugin;
 
@@ -12,6 +14,8 @@ public class Peer {
 	private CapacityControllerPlugin capacityControllerPlugin;
 	private boolean freerider;
 	
+	private List<Request> requests;
+	
 	public Peer(double totalCapacity, String id,
 			PrioritizationPlugin prioritizationPlugin,
 			CapacityControllerPlugin capacityControllerPlugin, boolean freerider) {
@@ -21,6 +25,13 @@ public class Peer {
 		this.prioritizationPlugin = prioritizationPlugin;
 		this.capacityControllerPlugin = capacityControllerPlugin;
 		this.freerider = freerider;
+	}
+	
+	
+	//used for tests
+	public Peer(String id){
+		TOTAL_CAPACITY = 0;
+		this.id = id;
 	}
 	
 	@Override
@@ -47,5 +58,9 @@ public class Peer {
 	
 	public boolean isFreerider(){
 		return freerider;
+	}
+	
+	public List<Request> getRequests() {
+		return requests;
 	}
 }

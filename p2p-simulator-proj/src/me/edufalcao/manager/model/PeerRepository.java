@@ -22,11 +22,11 @@ public class PeerRepository {
 		return peers;
 	}
 	
-//	public void populate(int numPeers, double capacity){
+//	public void populate(List<String> ids){
 //		if(peers==null){
 //			peers = new ArrayList<Peer>();
-//			for(int i = 1; i<=numPeers; i++)
-//				peers.add(new Peer("P"+i, capacity));
+//			for(String id : ids)
+//				peers.add(new Peer(id, capacity));
 //		}
 //	}
 	

@@ -1,0 +1,7 @@
+
+
+#Prioritization Plugin
+prioritization_plugin_class=me.edufalcao.manager.plugins.prioritization.nof.NoFPrioritizationPlugin
+
+#Capacity Controller Plugin
+capacity_controller_plugin_class=me.edufalcao.manager.plugins.capacitycontroller.fairnessdriven.FDCapacityPlugin
