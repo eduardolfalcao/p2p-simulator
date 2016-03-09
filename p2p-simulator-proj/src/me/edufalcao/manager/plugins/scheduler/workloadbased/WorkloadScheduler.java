@@ -25,10 +25,7 @@ public class WorkloadScheduler implements SchedulerPlugin{
 	
 	public void init(){
 		for(int i = 0; i <= endTime; i+=grainTime){
-			List<Event> eventList = LogReader.readWorkload(inputFile, i, i+grainTime);
-			for(Event ev : eventList)
-				schedule(ev);		
 		}
 	}
-
+	
 }

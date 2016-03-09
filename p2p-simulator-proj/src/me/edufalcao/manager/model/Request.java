@@ -18,6 +18,13 @@ public class Request {
 		lastAccountingTime = 0;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Request("+requestId+"), consumer("+consumer.getId()+"), provider("+provider.getId()+"),"
+				+ "submitTime("+submitTime+"), runtime("+runtime+")";				
+	}
+	
 	public String getRequestId() {
 		return requestId;
 	}
