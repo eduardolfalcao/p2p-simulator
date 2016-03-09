@@ -1,4 +1,4 @@
-package me.edufalcao.manager.plugins.accounting.simple;
+package me.edufalcao.manager.plugins.accounting;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -13,9 +13,10 @@ public class AccountingInfo {
 	private double donated = 0;		//this is what this.peer donated
 	private int lastUpdated = 0;
 	
-	public AccountingInfo(Peer peer){
+	public AccountingInfo(Peer peer, int currentTime){
 		this.peer = peer;
 		consumed = donated = 0;
+		lastUpdated = currentTime;
 	}
 	
 	public String toString() {
@@ -58,9 +59,7 @@ public class AccountingInfo {
 	
 	public void setLastUpdated(int lastUpdated) {
 		this.lastUpdated = lastUpdated;
-	}
-	
-	
+	}	
 	
 	public static double formatDouble(double doubleValue) {
 		DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols(Locale.US);

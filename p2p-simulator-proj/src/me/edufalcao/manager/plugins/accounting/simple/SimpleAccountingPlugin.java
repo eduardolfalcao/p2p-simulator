@@ -5,7 +5,7 @@ import java.util.List;
 
 import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.model.Request;
-import me.edufalcao.manager.model.events.request.RequestEvent;
+import me.edufalcao.manager.plugins.accounting.AccountingInfo;
 import me.edufalcao.manager.plugins.accounting.AccountingPlugin;
 
 public class SimpleAccountingPlugin implements AccountingPlugin{	
@@ -22,9 +22,9 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 	 * Updates the accounting for ongoing requests.
 	 */
 	@Override
-	public void update() {
+	public void updateAll() {
 		List<Request> requests = peer.getRequests();
-		for(Request request : requests){
+		for(Request request : requests){			
 			if(peer.equals(request.getConsumer()))	//then, the otherPeer is the provider
 				updateAccounting(request.getProvider(), false);
 			else									//then the otherPeer is the consumer
@@ -32,25 +32,41 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	@Override
 	public void update(Peer otherPeer) {
 		List<Request> requests = otherPeer.getRequests();
 		for(Request request : requests){
-			if(otherPeer.equals(request.getConsumer()))	//then, the otherPeer is the consumer
+			if(otherPeer.equals(request.getConsumer()))		//then, the otherPeer is the consumer
 				updateAccounting(request.getConsumer(), true);	
-			else										//then, the otherPeer is the provider
-				updateAccounting(request.getProvider(), false);				
+			else if(otherPeer.equals(request.getProvider()))//then, the otherPeer is the provider
+				updateAccounting(request.getProvider(), false);
 		}		
 	}
 	
-	private void updateAccounting(Peer otherPeer, boolean consuming){
+	@Override
+	public void add(Peer otherPeer) {
 		AccountingInfo accountingInfo = getAccountingInfo(otherPeer);
-		double resourceUsage = getTime()-accountingInfo.getLastUpdated();
-		if(consuming)
-			accountingInfo.addConsumption(resourceUsage);
+		if(accountingInfo==null)
+			accountingList.add(new AccountingInfo(otherPeer, getTime()));
 		else
-			accountingInfo.addDonation(resourceUsage);
-		accountingInfo.setLastUpdated(getTime());		
+			throw new IllegalArgumentException("Peer("+otherPeer.getId()+") is already in peer("+peer.getId()+")\'s accounting list!");
+	}
+	
+	private void updateAccounting(Peer otherPeer, boolean consuming){
+		AccountingInfo accountingInfo = getAccountingInfo(otherPeer);		
+		if(accountingInfo!=null){
+			double resourceUsage = getTime()-accountingInfo.getLastUpdated();
+			if(consuming)
+				accountingInfo.addConsumption(resourceUsage);
+			else
+				accountingInfo.addDonation(resourceUsage);
+			accountingInfo.setLastUpdated(getTime());
+		} 
+		else
+			throw new IllegalArgumentException("Peer("+otherPeer.getId()+") should be on ("+peer.getId()+")\'s accounting list!");
 	}
 	
 	
@@ -61,7 +77,7 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 	}
 
 	@Override
-	public AccountingInfo getAccountingInfo(Peer peer) {
+	public AccountingInfo getAccountingInfo(Peer peer){
 		for(AccountingInfo accountingInfo: accountingList)
 			if(peer.equals(accountingInfo.getPeer()))
 				return accountingInfo;
