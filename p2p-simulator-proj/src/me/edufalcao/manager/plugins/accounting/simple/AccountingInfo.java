@@ -9,11 +9,27 @@ import me.edufalcao.manager.model.Peer;
 public class AccountingInfo {
 	
 	private Peer peer;
-	private double consumed, donated = 0;
+	private double consumed = 0;	//this is what this.peer consumed
+	private double donated = 0;		//this is what this.peer donated
+	private int lastUpdated = 0;
 	
 	public AccountingInfo(Peer peer){
 		this.peer = peer;
 		consumed = donated = 0;
+	}
+	
+	public String toString() {
+		return "Peer(id)=" + peer.getId() + ", consumed=" + formatDouble(consumed) + ", donated="
+				+ formatDouble(donated);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AccountingInfo) {
+			AccountingInfo other = (AccountingInfo) obj;
+			return other.getPeer().equals(peer);
+		}
+		return false;
 	}
 	
 	public void addDonation(double donation) {
@@ -36,19 +52,15 @@ public class AccountingInfo {
 		return peer;
 	}
 	
-	public String toString() {
-		return "Peer(id)=" + peer.getId() + ", consumed=" + formatDouble(consumed) + ", donated="
-				+ formatDouble(donated);
+	public int getLastUpdated() {
+		return lastUpdated;
 	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof AccountingInfo) {
-			AccountingInfo other = (AccountingInfo) obj;
-			return other.getPeer().equals(peer);
-		}
-		return false;
+	public void setLastUpdated(int lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
+	
+	
 	
 	public static double formatDouble(double doubleValue) {
 		DecimalFormatSymbols formatSymbols = new DecimalFormatSymbols(Locale.US);
