@@ -48,8 +48,8 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 		List<Request> requests = peer.getRequests();
 		for(Request request : requests){
 			if(otherPeer.equals(request.getConsumer()) || otherPeer.equals(request.getProvider()))		
-				updateAccounting(request);	
-		}
+				updateAccounting(request);
+		}	
 		
 		/**
 		 * Once the accounting for all requests of this peer was performed, 
