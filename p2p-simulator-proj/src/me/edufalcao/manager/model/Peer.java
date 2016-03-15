@@ -3,7 +3,7 @@ package me.edufalcao.manager.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.edufalcao.manager.plugins.capacityController.CapacityControllerPlugin;
+import me.edufalcao.manager.plugins.capacitycontroller.CapacityControllerPlugin;
 import me.edufalcao.manager.plugins.prioritization.PrioritizationPlugin;
 
 public class Peer {
@@ -38,6 +38,11 @@ public class Peer {
 	}
 	
 	@Override
+	public String toString() {
+		return "Peerd("+id+"): Capacity("+TOTAL_CAPACITY+"), FR="+freerider;
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if(!(obj instanceof Peer))
 			return false;
@@ -69,5 +74,9 @@ public class Peer {
 	
 	public void removeRequest(Request request){
 		requests.remove(request);
+	}
+	
+	public double getTOTAL_CAPACITY() {
+		return TOTAL_CAPACITY;
 	}
 }

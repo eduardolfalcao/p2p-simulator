@@ -1,4 +1,4 @@
-package me.edufalcao.manager.plugins.capacityController;
+package me.edufalcao.manager.plugins.capacitycontroller;
 
 import me.edufalcao.manager.model.Peer;
 
