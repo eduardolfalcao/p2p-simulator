@@ -17,14 +17,12 @@ public class Peer {
 	
 	private List<Request> requests;
 	
-	public Peer(double totalCapacity, String id,
-			PrioritizationPlugin prioritizationPlugin,
-			CapacityControllerPlugin capacityControllerPlugin, boolean freerider) {
+	public Peer(double totalCapacity, String id, boolean freerider) {
 		super();
 		TOTAL_CAPACITY = totalCapacity;
 		this.id = id;
-		this.prioritizationPlugin = prioritizationPlugin;
-		this.capacityControllerPlugin = capacityControllerPlugin;
+		this.prioritizationPlugin = null;
+		this.capacityControllerPlugin = null;
 		this.freerider = freerider;
 		requests = new ArrayList<Request>();
 	}
@@ -78,5 +76,19 @@ public class Peer {
 	
 	public double getTOTAL_CAPACITY() {
 		return TOTAL_CAPACITY;
+	}
+	
+	public CapacityControllerPlugin getCapacityControllerPlugin() {
+		return capacityControllerPlugin;
+	}
+	
+	public void setCapacityControllerPlugin(
+			CapacityControllerPlugin capacityControllerPlugin) {
+		this.capacityControllerPlugin = capacityControllerPlugin;
+	}
+	
+	public void setPrioritizationPlugin(
+			PrioritizationPlugin prioritizationPlugin) {
+		this.prioritizationPlugin = prioritizationPlugin;
 	}
 }
