@@ -98,7 +98,8 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 			else
 				accountingEndTime = getTime();
 			
-			resourceUsage = accountingEndTime - accountingInfo.getLastUpdated();			
+			resourceUsage = accountingEndTime - Math.min(accountingEndTime, 
+														 Math.max(accountingInfo.getLastUpdated(), request.getSubmitTime()));			
 			if(consuming)
 				accountingInfo.addConsumption(resourceUsage);
 			else

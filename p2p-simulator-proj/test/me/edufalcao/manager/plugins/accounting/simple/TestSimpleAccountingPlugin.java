@@ -27,7 +27,7 @@ public class TestSimpleAccountingPlugin {
 	}
 
 	@Test
-	public void testUpdate() {		
+	public void testUpdateAll() {		
 		
 		peer1.getRequests().add(new Request("id1", peer2, peer1, 10, 50));	//peer1 donates to peer2
 		peer1.getRequests().add(new Request("id2", peer2, peer1, 30, 100));	//peer1 donates to peer2
@@ -35,9 +35,10 @@ public class TestSimpleAccountingPlugin {
 		peer1.getRequests().add(new Request("id3", peer3, peer1, 0, 150));	//peer1 donates to peer3
 		peer1.getRequests().add(new Request("id4", peer1, peer3, 100, 50));	//peer3 donates to peer1
 				
-		doReturn(10).when(mockedAccountingPlugin).getTime();
+		doReturn(0).when(mockedAccountingPlugin).getTime();
 		mockedAccountingPlugin.add(peer2);
-		mockedAccountingPlugin.add(peer3);	
+		mockedAccountingPlugin.add(peer3);
+		doReturn(10).when(mockedAccountingPlugin).getTime();
 		mockedAccountingPlugin.updateAll();		
 		AccountingInfo accPeer2 = mockedAccountingPlugin.getAccountingInfo(peer2);
 		assertEquals(0, accPeer2.getConsumed(), ACCEPTABLE_ERROR);
@@ -121,8 +122,26 @@ public class TestSimpleAccountingPlugin {
 	
 	@Test
 	public void testUpdateAccounting() {
-		accountingPlugin.add(peer2);
-		fail("Not yet implemented"); 	
+		doReturn(10).when(mockedAccountingPlugin).getTime();
+		mockedAccountingPlugin.add(peer2);
+		peer1.getRequests().add(new Request("id1", peer2, peer1, 10, 50));	//peer1 donates to peer2
+		doReturn(20).when(mockedAccountingPlugin).getTime();
+		mockedAccountingPlugin.updateAccounting(peer1.getRequests().get(0));
+		AccountingInfo accPeer2 = mockedAccountingPlugin.getAccountingInfo(peer2);
+		assertEquals(10, accPeer2.getConsumed(), ACCEPTABLE_ERROR);
+		assertEquals(0, accPeer2.getDonated(), ACCEPTABLE_ERROR);
+		mockedAccountingPlugin.getAccountingInfo(peer2).setLastUpdated(20);
+		doReturn(40).when(mockedAccountingPlugin).getTime();
+		mockedAccountingPlugin.updateAccounting(peer1.getRequests().get(0));
+		accPeer2 = mockedAccountingPlugin.getAccountingInfo(peer2);
+		assertEquals(30, accPeer2.getConsumed(), ACCEPTABLE_ERROR);
+		assertEquals(0, accPeer2.getDonated(), ACCEPTABLE_ERROR);
+		mockedAccountingPlugin.getAccountingInfo(peer2).setLastUpdated(40);
+		doReturn(100).when(mockedAccountingPlugin).getTime();
+		mockedAccountingPlugin.updateAccounting(peer1.getRequests().get(0));
+		accPeer2 = mockedAccountingPlugin.getAccountingInfo(peer2);
+		assertEquals(50, accPeer2.getConsumed(), ACCEPTABLE_ERROR);
+		assertEquals(0, accPeer2.getDonated(), ACCEPTABLE_ERROR);
 		
 	}
 	
