@@ -123,7 +123,7 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 		return null;			
 	}
 	
-	protected int getTime(){
+	public int getTime(){
 		return 0;	//FIXME
 	}
 	

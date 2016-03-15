@@ -10,6 +10,8 @@ public class Request {
 	
 	public Request(String requestId, Peer consumer, Peer provider,
 			int submitTime, int runtime){
+		if(consumer.equals(provider))
+			throw new IllegalArgumentException("Consumer and provider should be different peers");
 		this.requestId = requestId;
 		this.consumer = consumer;
 		this.provider = provider;

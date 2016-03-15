@@ -26,12 +26,22 @@ public class FairnessDrivenCapacityController implements CapacityControllerPlugi
 		this.accountingPlugin = accountingPlugin;
 		currentPairwiseFairness = lastPairwiseFairness = 0;
 		currentGlobalFairness = lastGlobalFairness = 0;
-		increasing = false;
+		increasing = false;		
+		
+		if(minimumThreshold < 0 || maximumThreshold < 0 || deltaC > 1 || deltaC < 0)
+			throw new IllegalArgumentException("Unexpected argument for the FDController: "+this+"\n"
+					+ "Any of this conditions were (but shouldn't be) satisfied: minimumThreshold < 0 || maximumThreshold < 0 || deltaC > 1 || deltaC < 0");
 		this.deltaC = deltaC;
 		this.minimumThreshold = minimumThreshold;
 		this.maximumThreshold = maximumThreshold;
 		this.maximumCapacityToSupply = maximumCapacityOfPeer;
 		this.MAXIMUM_CAPACITY_OF_PEER = maximumCapacityOfPeer;
+	}
+	
+	@Override
+	public String toString() {
+		return "Params of Fairness Driven Capacity Controller - minimumThreshold: "+minimumThreshold+", "
+				+ "maximumThreshold: "+maximumThreshold+", deltaC: "+deltaC+".";
 	}
 	
 	//FIXME insert time checking to avoid updating twice at the same timestep
@@ -89,10 +99,34 @@ public class FairnessDrivenCapacityController implements CapacityControllerPlugi
 	}
 	
 	protected double getFairness(double consumed, double donated){
-		if(donated == 0)
-			return -1;
+		if(donated < 0 || consumed < 0)
+			throw new IllegalArgumentException("Donated and consumed must be >=0. It should never be <0.\n"+
+					"Donated("+donated+") and Consumed("+consumed+")");
+		else if(donated == 0)
+			return -1;		
 		else
 			return consumed/donated;
+	}
+	
+	
+	/**
+	 * For MOCKING purposes.
+	 */
+	
+	protected double getCurrentPairwiseFairness() {
+		return currentPairwiseFairness;
+	}
+	
+	protected double getLastPairwiseFairness() {
+		return lastPairwiseFairness;
+	} 
+	
+	protected double getCurrentGlobalFairness() {
+		return currentGlobalFairness;
+	}
+	
+	protected double getLastGlobalFairness() {
+		return lastGlobalFairness;
 	}
 	
 	
