@@ -17,8 +17,8 @@ public class TestFairnessDrivenCapacityController {
 
 	SimpleAccountingPlugin accountingPlugin;
 	SimpleAccountingPlugin mockedAccountingPlugin;
-	FairnessDrivenCapacityController fdController;
-	FairnessDrivenCapacityController mockedFdController;
+	TwoFoldFairnessDrivenController fdController;
+	TwoFoldFairnessDrivenController mockedFdController;
 	Peer peer1, peer2, peer3;
 	
 	@Before
@@ -33,7 +33,7 @@ public class TestFairnessDrivenCapacityController {
 		double minimumThreshold = 0.8;
 		double maximumThreshold = 1;
 		double maximumCapacityOfPeer = 5;
-		fdController = new FairnessDrivenCapacityController(mockedAccountingPlugin, deltaC, minimumThreshold, maximumThreshold, maximumCapacityOfPeer);
+		fdController = new TwoFoldFairnessDrivenController(peer1, mockedAccountingPlugin, deltaC, minimumThreshold, maximumThreshold, maximumCapacityOfPeer);
 		mockedFdController = spy(fdController);
 		
 	}

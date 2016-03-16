@@ -123,16 +123,20 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 		return null;			
 	}
 	
-	public int getTime(){
-		return 0;	//FIXME
-	}
-	
 	/**
 	 * Removes all the requests finished from the peer's list.
 	 */
 	private void finishRequests(){
 		peer.getRequests().removeAll(finishedRequestsList);
 		finishedRequestsList.clear();
+	}
+	
+	/**
+	 * For MOCKING purposes.
+	 */
+	//this will probably be removed
+	public int getTime(){
+		return 0;	//FIXME
 	}
 
 }
