@@ -14,7 +14,7 @@ public class GlobalFairnessDrivenController extends FairnessDrivenCapacityContro
 	
 	public GlobalFairnessDrivenController(Peer peer, AccountingPlugin accountingPlugin, double deltaC,
 			double minimumThreshold, double maximumThreshold, double maximumCapacityOfPeer) {
-		this.accountingPlugin = accountingPlugin;
+		super.accountingPlugin = accountingPlugin;
 		currentFairness = lastFairness = -1;
 		lastUpdated = -1;		
 		controller = new HillClimbingAlgorithm(deltaC, minimumThreshold, maximumThreshold, maximumCapacityOfPeer);

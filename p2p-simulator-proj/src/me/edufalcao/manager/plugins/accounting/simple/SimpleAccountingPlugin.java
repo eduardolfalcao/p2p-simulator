@@ -131,6 +131,10 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 		finishedRequestsList.clear();
 	}
 	
+	public Peer getPeer(){
+		return peer;
+	}
+	
 	/**
 	 * For MOCKING purposes.
 	 */
