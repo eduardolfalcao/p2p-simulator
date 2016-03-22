@@ -24,6 +24,7 @@ public class GlobalFairnessDrivenController extends FairnessDrivenCapacityContro
 		if(lastUpdated!=getTime()){
 			//time is different, then we must compute the new maxCapacity
 			lastUpdated = getTime();
+			updateFairness();
 			return controller.getMaxCapacityFromFairness();
 		}	
 		//time is equal, then the maxCapacity was already computed, here we just return

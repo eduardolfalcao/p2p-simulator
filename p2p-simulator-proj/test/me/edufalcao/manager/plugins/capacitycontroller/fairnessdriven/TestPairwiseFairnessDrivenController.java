@@ -175,65 +175,13 @@ public class TestPairwiseFairnessDrivenController {
 		peer1.getRequests().add(new Request("id1", peer2, peer1, 10, 40));	//peer1 donates to peer2
 		peer1.getRequests().add(new Request("id2", peer1, peer2, 50, 100));	//peer2 donates to peer1
 		
-		peer1.getRequests().add(new Request("id3", peer3, peer1, 50, 100));	//peer1 donates to peer2
-		peer1.getRequests().add(new Request("id4", peer1, peer3, 10, 40));	//peer2 donates to peer1
+		peer1.getRequests().add(new Request("id3", peer3, peer1, 50, 100));	//peer1 donates to peer3
+		peer1.getRequests().add(new Request("id4", peer1, peer3, 10, 40));	//peer3 donates to peer1
 		
 		doReturn(0).when(mockedAccountingPlugin).getTime();
 		doReturn(0).when(mockedFdController).getTime();
 		mockedAccountingPlugin.add(peer2);
-		mockedAccountingPlugin.add(peer3);
-		
-		/**
-		 * doReturn(10).when(mockedAccountingPlugin).getTime();
-		doReturn(10).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(maximumCapacityOfPeer,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
-		
-		doReturn(20).when(mockedAccountingPlugin).getTime();
-		doReturn(20).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(maximumCapacityOfPeer,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
-		
-		doReturn(30).when(mockedAccountingPlugin).getTime();
-		doReturn(30).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(4.5,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
-		
-		doReturn(40).when(mockedAccountingPlugin).getTime();
-		doReturn(40).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(4,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
-		
-		doReturn(50).when(mockedAccountingPlugin).getTime();
-		doReturn(50).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(3.5,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
-		
-		doReturn(60).when(mockedAccountingPlugin).getTime();
-		doReturn(60).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(3,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
-		
-		doReturn(70).when(mockedAccountingPlugin).getTime();
-		doReturn(70).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(2.5,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
-		
-		doReturn(80).when(mockedAccountingPlugin).getTime();
-		doReturn(80).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(2,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
-		
-		doReturn(90).when(mockedAccountingPlugin).getTime();
-		doReturn(90).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(1.5,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
-		
-		doReturn(100).when(mockedAccountingPlugin).getTime();
-		doReturn(100).when(mockedFdController).getTime();
-		mockedAccountingPlugin.updateAll();
-		assertEquals(2,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);		
-		 */
+		mockedAccountingPlugin.add(peer3);	
 		
 		doReturn(10).when(mockedAccountingPlugin).getTime();
 		doReturn(10).when(mockedFdController).getTime();

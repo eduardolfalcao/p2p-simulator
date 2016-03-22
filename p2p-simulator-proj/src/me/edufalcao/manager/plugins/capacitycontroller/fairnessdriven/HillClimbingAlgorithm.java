@@ -9,9 +9,7 @@ public class HillClimbingAlgorithm {
 	private final double MAXIMUM_CAPACITY;
 	
 	private double lastFairness, currentFairness;
-	private int lastUpdated;
-	
-	
+	private int lastUpdated;	
 	
 	public HillClimbingAlgorithm(double deltaC,
 			double minimumThreshold, double maximumThreshold, double maximumCapacityOfPeer) {
