@@ -1,12 +1,12 @@
 package me.edufalcao.manager.plugins.capacitycontroller.fairnessdriven;
 
+import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.plugins.accounting.AccountingPlugin;
 import me.edufalcao.manager.plugins.capacitycontroller.CapacityControllerPlugin;
 
 public abstract class FairnessDrivenCapacityController implements CapacityControllerPlugin{
 
-	protected AccountingPlugin accountingPlugin;
-	protected double currentFairness, lastFairness;	
+	protected AccountingPlugin accountingPlugin;	
 	
 	protected double getFairness(double consumed, double donated){
 		if(donated < 0 || consumed < 0)
@@ -16,15 +16,10 @@ public abstract class FairnessDrivenCapacityController implements CapacityContro
 			return -1;		
 		else
 			return consumed/donated;
-	}
+	}	
 	
-	public double getCurrentFairness() {
-		return currentFairness;
-	}
-	
-	public double getLastFairness() {
-		return lastFairness;
-	}
+	public abstract double getCurrentFairness(Peer peer);
+	public abstract double getLastFairness(Peer peer);
 	
 	/**
 	 * For MOCKING purposes.

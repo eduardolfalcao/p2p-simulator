@@ -17,7 +17,7 @@ public class TwoFoldFairnessDrivenController implements CapacityControllerPlugin
 	public double getMaxCapacityToSupply(Peer peer) {
 		double amountToSupply = 0;
 		amountToSupply = pairwiseController.getMaxCapacityToSupply(peer);
-		if(pairwiseController.getCurrentFairness()>=0)
+		if(pairwiseController.getCurrentFairness(peer)>=0)
 			return amountToSupply;
 		else
 			return globalController.getMaxCapacityToSupply(peer);			
