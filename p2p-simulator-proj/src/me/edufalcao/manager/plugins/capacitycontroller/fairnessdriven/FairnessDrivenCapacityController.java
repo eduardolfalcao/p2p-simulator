@@ -8,7 +8,7 @@ public abstract class FairnessDrivenCapacityController implements CapacityContro
 
 	protected AccountingPlugin accountingPlugin;	
 	
-	protected double getFairness(double consumed, double donated){
+	public double getFairness(double consumed, double donated){
 		if(donated < 0 || consumed < 0)
 			throw new IllegalArgumentException("Donated and consumed must be >=0. It should never be <0.\n"+
 					"Donated("+donated+") and Consumed("+consumed+")");
