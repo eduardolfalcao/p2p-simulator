@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import me.edufalcao.manager.model.Peer;
 
-public class AccountingInfo {
+public class AccountingInfo implements Comparable<AccountingInfo>{
 	
 	private Peer peer;
 	private double consumed = 0;	//this is what this.peer consumed
@@ -31,6 +31,28 @@ public class AccountingInfo {
 			return other.getPeer().equals(peer);
 		}
 		return false;
+	}
+	
+	@Override
+	public int compareTo(AccountingInfo accInfo) {
+		// TODO create tests
+		
+		final int BEFORE = -1;
+	    final int EQUAL = 0;
+	    final int AFTER = 1;
+				
+		if (getBalance() < accInfo.getBalance()) 
+	    	return BEFORE;
+		else if(getBalance() == accInfo.getBalance())
+			return EQUAL;
+		else	// (myBalance >= hisBalance) 
+	    	return AFTER;
+	}
+	
+	//TODO create tests
+	private double getBalance() {
+		return donated - consumed;
+
 	}
 	
 	public void addDonation(double donation) {
@@ -66,6 +88,6 @@ public class AccountingInfo {
 		formatSymbols.setDecimalSeparator('.');
 		DecimalFormat df = new DecimalFormat("0.000000", formatSymbols);
 		return Double.valueOf(df.format(doubleValue));
-	}
+	}	
 
 }

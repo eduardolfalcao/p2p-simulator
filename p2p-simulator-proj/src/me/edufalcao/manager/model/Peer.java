@@ -3,7 +3,10 @@ package me.edufalcao.manager.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.edufalcao.manager.plugins.accounting.AccountingInfo;
+import me.edufalcao.manager.plugins.accounting.AccountingPlugin;
 import me.edufalcao.manager.plugins.capacitycontroller.CapacityControllerPlugin;
+import me.edufalcao.manager.plugins.peerchooser.PeerChooserPlugin;
 import me.edufalcao.manager.plugins.prioritization.PrioritizationPlugin;
 
 public class Peer {
@@ -11,6 +14,8 @@ public class Peer {
 	
 	private final double TOTAL_CAPACITY;
 	private String id;
+	private AccountingPlugin accountingPlugin;
+	private PeerChooserPlugin peerChooserPlugin;
 	private PrioritizationPlugin prioritizationPlugin;
 	private CapacityControllerPlugin capacityControllerPlugin;
 	private boolean freerider;
@@ -21,6 +26,8 @@ public class Peer {
 		super();
 		TOTAL_CAPACITY = totalCapacity;
 		this.id = id;
+		this.accountingPlugin = null;
+		this.peerChooserPlugin = null;
 		this.prioritizationPlugin = null;
 		this.capacityControllerPlugin = null;
 		this.freerider = freerider;
