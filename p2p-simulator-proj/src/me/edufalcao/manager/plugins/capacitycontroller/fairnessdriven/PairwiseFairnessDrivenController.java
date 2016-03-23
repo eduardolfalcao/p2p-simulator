@@ -29,7 +29,7 @@ public class PairwiseFairnessDrivenController extends FairnessDrivenCapacityCont
 	@Override
 	public double getMaxCapacityToSupply(Peer peer) {
 		
-		if(controllers.containsKey(peer) && controllers.get(peer).getLastUpdated() == getTime()){
+		if(controllers.containsKey(peer) && controllers.get(peer).getLastUpdated() == getTime()){			
 			Peer thisPeer = null;
 			if(accountingPlugin instanceof	SimpleAccountingPlugin)
 				thisPeer = ((SimpleAccountingPlugin)accountingPlugin).getPeer();
