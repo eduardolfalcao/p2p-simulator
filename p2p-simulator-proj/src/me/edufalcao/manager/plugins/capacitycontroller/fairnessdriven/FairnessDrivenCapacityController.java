@@ -1,5 +1,6 @@
 package me.edufalcao.manager.plugins.capacitycontroller.fairnessdriven;
 
+import me.edufalcao.manager.TimeManager;
 import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.plugins.accounting.AccountingPlugin;
 import me.edufalcao.manager.plugins.capacitycontroller.CapacityControllerPlugin;
@@ -21,12 +22,8 @@ public abstract class FairnessDrivenCapacityController implements CapacityContro
 	public abstract double getCurrentFairness(Peer peer);
 	public abstract double getLastFairness(Peer peer);
 	
-	/**
-	 * For MOCKING purposes.
-	 */
-	//this will probably be removed
 	protected int getTime(){
-		return 0;	//FIXME
+		return TimeManager.getInstance().getTime();
 	}
 	
 }

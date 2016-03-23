@@ -171,10 +171,5 @@ public class TestSimpleAccountingPlugin {
 		accountingPlugin.add(peer3);
 		assertNotNull(accountingPlugin.getAccountingInfo(peer3));
 	}
-	
-	@Test
-	public void testGetTime() {
-		fail("Not yet implemented");
-	}
 
 }

@@ -3,6 +3,7 @@ package me.edufalcao.manager.plugins.accounting.simple;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.edufalcao.manager.TimeManager;
 import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.model.Request;
 import me.edufalcao.manager.plugins.accounting.AccountingInfo;
@@ -135,12 +136,8 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 		return peer;
 	}
 	
-	/**
-	 * For MOCKING purposes.
-	 */
-	//this will probably be removed
 	public int getTime(){
-		return 0;	//FIXME
+		return TimeManager.getInstance().getTime();
 	}
 
 }

@@ -251,8 +251,8 @@ public class TestGlobalFairnessDrivenController {
 		doReturn(120).when(mockedAccountingPlugin).getTime();
 		doReturn(120).when(mockedFdController).getTime();
 		mockedAccountingPlugin.updateAll();
-		assertEquals(3,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);		
-		assertEquals(4,mockedFdController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);		
+		assertEquals(2.5,mockedFdController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);		
+		assertEquals(2.5,mockedFdController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);		
 	}
 
 	@Test
