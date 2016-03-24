@@ -3,6 +3,7 @@ package me.edufalcao.manager.plugins.capacitycontroller.fairnessdriven;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
+import me.edufalcao.manager.TimeManager;
 import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.model.Request;
 import me.edufalcao.manager.plugins.accounting.simple.SimpleAccountingPlugin;
@@ -15,15 +16,11 @@ public class TestTwoFoldFairnessDrivenController {
 
 	private final double ACCEPTABLE_ERROR = 0.000001;
 
-	SimpleAccountingPlugin accountingPlugin;
-	SimpleAccountingPlugin mockedAccountingPlugin;
-	
-	TwoFoldFairnessDrivenController twofoldController;
-		
+	SimpleAccountingPlugin accountingPlugin;	
+	TwoFoldFairnessDrivenController twofoldController;		
 	PairwiseFairnessDrivenController pairwiseController;
-	PairwiseFairnessDrivenController mockedPairwiseController;
 	GlobalFairnessDrivenController globalController;
-	GlobalFairnessDrivenController mockedGlobalController;
+
 	
 	
 	Peer peer1, peer2, peer3;
@@ -35,19 +32,16 @@ public class TestTwoFoldFairnessDrivenController {
 		peer1 = new Peer("p1");
 		accountingPlugin = new SimpleAccountingPlugin(peer1);
 		peer2 = new Peer("p2");
-		peer3 = new Peer("p3");
-		mockedAccountingPlugin = spy(accountingPlugin);		
+		peer3 = new Peer("p3");	
 		
 		deltaC = 0.1;
 		minimumThreshold = 0.8;
 		maximumThreshold = 1;
 		maximumCapacityOfPeer = 5;
-		pairwiseController = new PairwiseFairnessDrivenController(mockedAccountingPlugin, deltaC, minimumThreshold, maximumThreshold, maximumCapacityOfPeer);
-		mockedPairwiseController = spy(pairwiseController);
-		globalController = new GlobalFairnessDrivenController(peer1, mockedAccountingPlugin, deltaC, minimumThreshold, maximumThreshold, maximumCapacityOfPeer);
-		mockedGlobalController = spy(globalController);
+		pairwiseController = new PairwiseFairnessDrivenController(accountingPlugin, deltaC, minimumThreshold, maximumThreshold, maximumCapacityOfPeer);
+		globalController = new GlobalFairnessDrivenController(peer1, accountingPlugin, deltaC, minimumThreshold, maximumThreshold, maximumCapacityOfPeer);
 		
-		twofoldController = new TwoFoldFairnessDrivenController(mockedPairwiseController, mockedGlobalController);
+		twofoldController = new TwoFoldFairnessDrivenController(pairwiseController, globalController);
 	}
 
 	@Test
@@ -62,105 +56,79 @@ public class TestTwoFoldFairnessDrivenController {
 		
 		int time = 0;
 		
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.add(peer2);
-		mockedAccountingPlugin.add(peer3);
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.add(peer2);
+		accountingPlugin.add(peer3);
 		
 		time = 10;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 20;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(4.5,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(4.5,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 30;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(4,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(4,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 40;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(4.5,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(3.5,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 50;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(3,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 60;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(2.5,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 70;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(2,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 80;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(1.5,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 90;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(1,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 100;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(0.5,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 110;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(0,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);
 		
 		time = 120;
-		doReturn(time).when(mockedAccountingPlugin).getTime();
-		doReturn(time).when(mockedPairwiseController).getTime();
-		doReturn(time).when(mockedGlobalController).getTime();
-		mockedAccountingPlugin.updateAll();
+		TimeManager.getInstance().setTime(time);
+		accountingPlugin.updateAll();
 		assertEquals(maximumCapacityOfPeer,twofoldController.getMaxCapacityToSupply(peer2), ACCEPTABLE_ERROR);
 		assertEquals(0,twofoldController.getMaxCapacityToSupply(peer3), ACCEPTABLE_ERROR);	
 	}

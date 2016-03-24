@@ -51,7 +51,7 @@ public class AccountingInfo implements Comparable<AccountingInfo>{
 	
 	//TODO create tests
 	private double getBalance() {
-		return donated - consumed;
+		return Math.max(0, donated - consumed);
 
 	}
 	

@@ -2,6 +2,7 @@ package me.edufalcao.manager.plugins.capacitycontroller.fairnessdriven;
 
 import java.util.List;
 
+import me.edufalcao.manager.TimeManager;
 import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.plugins.accounting.AccountingInfo;
 import me.edufalcao.manager.plugins.accounting.AccountingPlugin;
@@ -21,9 +22,9 @@ public class GlobalFairnessDrivenController extends FairnessDrivenCapacityContro
 
 	@Override
 	public double getMaxCapacityToSupply(Peer peer) {
-		if(lastUpdated!=getTime()){
+		if(lastUpdated!=TimeManager.getInstance().getTime()){
 			//time is different, then we must compute the new maxCapacity
-			lastUpdated = getTime();
+			lastUpdated = TimeManager.getInstance().getTime();
 			updateFairness();
 			return controller.getMaxCapacityFromFairness();
 		}	

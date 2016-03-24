@@ -1,4 +1,4 @@
-package me.edufalcao.manager.plugins.peerchooser.nonrepeatable;
+package me.edufalcao.manager.plugins.peerchooser.nonrepeated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +7,12 @@ import me.edufalcao.manager.TimeManager;
 import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.plugins.peerchooser.PeerChooserPlugin;
 
-public abstract class TimeBasedPeerChooserPlugin implements PeerChooserPlugin{
+public abstract class NonRepeatedPeerChooser implements PeerChooserPlugin{
 	
 	private int lastUpdated;
 	protected List<Peer> alreadyChosen;
 	
-	public TimeBasedPeerChooserPlugin() {
+	public NonRepeatedPeerChooser() {
 		alreadyChosen = new ArrayList<Peer>();
 		lastUpdated = 0;
 	}

@@ -1,4 +1,4 @@
-package me.edufalcao.manager.plugins.peerchooser.nonrepeatable;
+package me.edufalcao.manager.plugins.peerchooser.nonrepeated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Random;
 import me.edufalcao.manager.TimeManager;
 import me.edufalcao.manager.model.Peer;
 
-public class RandomPeerChooserPlugin extends TimeBasedPeerChooserPlugin{
+public class RandomPeerChooserPlugin extends NonRepeatedPeerChooser{
 	
 	private Random random;
 	
@@ -21,9 +21,10 @@ public class RandomPeerChooserPlugin extends TimeBasedPeerChooserPlugin{
 		List<Peer> candidatePeers = new ArrayList<Peer>();
 		candidatePeers.addAll(peers);
 		candidatePeers.removeAll(alreadyChosen);
-		Peer chosen = peers.get(random.nextInt(candidatePeers.size()));
-		alreadyChosen.add(chosen);
-		
+		if(candidatePeers.size()==0)
+			return null;
+		Peer chosen = candidatePeers.get(random.nextInt(candidatePeers.size()));
+		alreadyChosen.add(chosen);		
 		return chosen;
 	}
 

@@ -36,7 +36,7 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 		 * we now update the lastUpdatedTime of each accounting info. 
 		 */
 		for(AccountingInfo accInfo : accountingList)
-			accInfo.setLastUpdated(getTime());
+			accInfo.setLastUpdated(TimeManager.getInstance().getTime());
 				
 		finishRequests();
 	}
@@ -56,7 +56,7 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 		 * Once the accounting for all requests of this peer was performed, 
 		 * we now update the lastUpdatedTime of this accounting info. 
 		 */
-		getAccountingInfo(otherPeer).setLastUpdated(getTime());
+		getAccountingInfo(otherPeer).setLastUpdated(TimeManager.getInstance().getTime());
 		
 		finishRequests();		
 	}
@@ -65,7 +65,7 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 	public void add(Peer otherPeer) {
 		AccountingInfo accountingInfo = getAccountingInfo(otherPeer);
 		if(accountingInfo==null)
-			accountingList.add(new AccountingInfo(otherPeer, getTime()));
+			accountingList.add(new AccountingInfo(otherPeer, TimeManager.getInstance().getTime()));
 		else
 			throw new IllegalArgumentException("Peer("+otherPeer.getId()+") is already in peer("+peer.getId()+")\'s accounting list!");
 	}
@@ -91,13 +91,13 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 			int accountingEndTime = 0;
 			
 			int endRequestTime = request.getSubmitTime() + request.getRuntime();
-			if(getTime() >= endRequestTime){
+			if(TimeManager.getInstance().getTime() >= endRequestTime){
 				accountingEndTime = endRequestTime;
 				//peer.removeRequest(request);
 				finishedRequestsList.add(request);
 			}
 			else
-				accountingEndTime = getTime();
+				accountingEndTime = TimeManager.getInstance().getTime();
 			
 			resourceUsage = accountingEndTime - Math.min(accountingEndTime, 
 														 Math.max(accountingInfo.getLastUpdated(), request.getSubmitTime()));			
@@ -134,10 +134,6 @@ public class SimpleAccountingPlugin implements AccountingPlugin{
 	
 	public Peer getPeer(){
 		return peer;
-	}
-	
-	public int getTime(){
-		return TimeManager.getInstance().getTime();
 	}
 
 }

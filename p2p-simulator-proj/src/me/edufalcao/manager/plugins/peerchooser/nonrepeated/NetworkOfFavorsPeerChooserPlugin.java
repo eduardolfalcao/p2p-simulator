@@ -1,4 +1,4 @@
-package me.edufalcao.manager.plugins.peerchooser.nonrepeatable;
+package me.edufalcao.manager.plugins.peerchooser.nonrepeated;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,10 +8,9 @@ import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.plugins.accounting.AccountingInfo;
 import me.edufalcao.manager.plugins.accounting.AccountingPlugin;
 
-public class NetworkOfFavorsPeerChooserPlugin extends TimeBasedPeerChooserPlugin{
+public class NetworkOfFavorsPeerChooserPlugin extends NonRepeatedPeerChooser{
 
 	private AccountingPlugin accountingPlugin;
-	private List<Peer> alreadyChosen;
 	
 	public NetworkOfFavorsPeerChooserPlugin(AccountingPlugin accountingPlugin) {
 		super();
@@ -22,12 +21,13 @@ public class NetworkOfFavorsPeerChooserPlugin extends TimeBasedPeerChooserPlugin
 	@Override
 	public Peer choose(List<Peer> peers) {
 		updateListAndTime();		
-		Peer chosen = getPeerWithHigherDebt();
-		alreadyChosen.add(chosen);		
+		Peer chosen = getPeerWithHigherBalance();
+		if(chosen!=null)
+			alreadyChosen.add(chosen);		
 		return chosen;
 	}
 	
-	protected Peer getPeerWithHigherDebt(){
+	protected Peer getPeerWithHigherBalance(){
 		List<AccountingInfo> accountingList = new ArrayList<AccountingInfo>();
 		accountingList.addAll(accountingPlugin.getAccountingList());
 		
@@ -38,7 +38,7 @@ public class NetworkOfFavorsPeerChooserPlugin extends TimeBasedPeerChooserPlugin
 		accountingList.removeAll(alreadyChosenAccountingList);
 		
 		Collections.sort(accountingList);
-		return accountingList.get(accountingList.size()-1).getPeer();
+		return accountingList.size()==0 ? null : accountingList.get(accountingList.size()-1).getPeer();
 	}
 
 }

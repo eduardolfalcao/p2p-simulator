@@ -3,6 +3,7 @@ package me.edufalcao.manager.plugins.capacitycontroller.fairnessdriven;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.edufalcao.manager.TimeManager;
 import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.plugins.accounting.AccountingPlugin;
 import me.edufalcao.manager.plugins.accounting.simple.SimpleAccountingPlugin;
@@ -29,7 +30,7 @@ public class PairwiseFairnessDrivenController extends FairnessDrivenCapacityCont
 	@Override
 	public double getMaxCapacityToSupply(Peer peer) {
 		
-		if(controllers.containsKey(peer) && controllers.get(peer).getLastUpdated() == getTime()){			
+		if(controllers.containsKey(peer) && controllers.get(peer).getLastUpdated() == TimeManager.getInstance().getTime()){			
 			Peer thisPeer = null;
 			if(accountingPlugin instanceof	SimpleAccountingPlugin)
 				thisPeer = ((SimpleAccountingPlugin)accountingPlugin).getPeer();
@@ -39,7 +40,7 @@ public class PairwiseFairnessDrivenController extends FairnessDrivenCapacityCont
 			controllers.put(peer, new HillClimbingAlgorithm(deltaC, minimumThreshold, maximumThreshold, maximumCapacityOfPeer));
 		}
 		
-		controllers.get(peer).setLastUpdated(getTime());
+		controllers.get(peer).setLastUpdated(TimeManager.getInstance().getTime());
 		updateFairness(peer);	
 		return controllers.get(peer).getMaxCapacityFromFairness();				
 	}

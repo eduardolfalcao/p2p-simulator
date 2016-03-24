@@ -8,6 +8,7 @@ import me.edufalcao.manager.plugins.capacitycontroller.fairnessdriven.TestGlobal
 import me.edufalcao.manager.plugins.capacitycontroller.fairnessdriven.TestPairwiseFairnessDrivenController;
 import me.edufalcao.manager.plugins.capacitycontroller.fairnessdriven.TestTwoFoldFairnessDrivenController;
 import me.edufalcao.manager.plugins.capacitycontroller.satisfactiondriven.TestSatisfactionDrivenCapacityController;
+import me.edufalcao.manager.plugins.peerchooser.nonrepeated.TestRandomPeerChooserPlugin;
 import me.edufalcao.manager.plugins.scheduler.workloadbased.TestLogReader;
 
 import org.junit.runner.RunWith;
@@ -24,6 +25,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	TestGlobalFairnessDrivenController.class,
 	TestPairwiseFairnessDrivenController.class,
 	TestTwoFoldFairnessDrivenController.class,
+	TestRandomPeerChooserPlugin.class,
 	TestLogReader.class})
 public class AllTests {
 
