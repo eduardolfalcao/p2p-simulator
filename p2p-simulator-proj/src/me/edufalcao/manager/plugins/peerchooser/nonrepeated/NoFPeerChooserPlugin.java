@@ -8,11 +8,11 @@ import me.edufalcao.manager.model.Peer;
 import me.edufalcao.manager.plugins.accounting.AccountingInfo;
 import me.edufalcao.manager.plugins.accounting.AccountingPlugin;
 
-public class NetworkOfFavorsPeerChooserPlugin extends NonRepeatedPeerChooser{
+public class NoFPeerChooserPlugin extends NonRepeatedPeerChooser{
 
 	private AccountingPlugin accountingPlugin;
 	
-	public NetworkOfFavorsPeerChooserPlugin(AccountingPlugin accountingPlugin) {
+	public NoFPeerChooserPlugin(AccountingPlugin accountingPlugin) {
 		super();
 		this.accountingPlugin = accountingPlugin;
 		alreadyChosen = new ArrayList<Peer>();

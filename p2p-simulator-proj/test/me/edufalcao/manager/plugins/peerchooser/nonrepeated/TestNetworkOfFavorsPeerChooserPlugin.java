@@ -21,7 +21,7 @@ import org.junit.Test;
 public class TestNetworkOfFavorsPeerChooserPlugin {
 	
 	SimpleAccountingPlugin accountingPlugin;
-	NetworkOfFavorsPeerChooserPlugin nofChooserPlugin;
+	NoFPeerChooserPlugin nofChooserPlugin;
 	TimeManager timeManager;
 	Peer peer1, peer2, peer3, peer4, peer5, peer6, peer7;
 	List<Peer> peers;
@@ -37,7 +37,7 @@ public class TestNetworkOfFavorsPeerChooserPlugin {
 		peer5 = new Peer("p5");
 		peer6 = new Peer("p6");
 		peer7 = new Peer("p7");				
-		nofChooserPlugin = new NetworkOfFavorsPeerChooserPlugin(accountingPlugin);
+		nofChooserPlugin = new NoFPeerChooserPlugin(accountingPlugin);
 		peerArray = new Peer[] {peer2, peer3, peer4, peer5, peer6, peer7};
 		peers = Arrays.asList(peerArray);
 		
